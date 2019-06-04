@@ -1,0 +1,6 @@
+.column {
+  width: calc(100% - 50px);
+  display: block;
+  margin-left: 20px;
+  padding: 20px;
+}
