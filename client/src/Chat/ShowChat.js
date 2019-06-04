@@ -20,6 +20,7 @@ class ShowChat extends React.Component {
             init: true,
             messagesLoading: false,
             postLoading: false,
+            seconds:0
         };
 
 
@@ -32,6 +33,18 @@ class ShowChat extends React.Component {
             baseURL: 'http://localhost:8080/chat/',
         });
 
+    }
+    tick() {
+        this.anonymous.get(this.props.match.params.chatId, {baseURL: 'http://localhost:8080/message/chatId/'})
+            .then(response => {
+
+                let messages = response.data;
+                this.setState({
+                    messages,
+                    commentsLoading: false,
+                });
+
+            })
     }
 
     render() {
@@ -269,9 +282,14 @@ class ShowChat extends React.Component {
 
     componentDidMount = () => {
 
+        this.interval = setInterval(() => this.tick(), 1000);
+
         this.refresh();
 
     };
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
 
 }
 
